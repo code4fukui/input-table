@@ -1,5 +1,8 @@
+
 # input-table
  
+https://user-images.githubusercontent.com/1715217/124221654-25489800-db3b-11eb-8b42-c493070b1621.mp4
+
 https://code4fukui.github.io/input-table/
 
 ## usage
