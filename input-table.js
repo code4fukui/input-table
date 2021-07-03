@@ -103,7 +103,7 @@ const makeTable = (ar, chgcallback) => {
           setPos(pos);
         }
         e.preventDefault();
-      } else if (e.key == "ArrowDown" || e.key == "Enter") {
+      } else if (e.key == "ArrowDown") { // } || e.key == "Enter") {
         const pos = getPos(e.srcElement);
         if (pos && pos.y < ar.length + 1) {
           pos.y++;
