@@ -304,6 +304,11 @@ class InputTable extends HTMLElement {
         const data = await CSV.fetch(url);
         this.value = data;
       })();
+    } else {
+      const data = this.textContent;
+      if (data.length > 0) {
+        this.value = data;
+      }
     }
   }
   changed() {
@@ -312,6 +317,9 @@ class InputTable extends HTMLElement {
     }
   }
   get value() {
+    if (!this.tbl) {
+      return "";
+    }
     const data = this.tbl.getData();
     return CSV.encode(data);
   }
