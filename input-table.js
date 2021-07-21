@@ -302,6 +302,7 @@ class InputTable extends HTMLElement {
     style({
       table: {
         "tabel-collapse": "collapse",
+        "background-color": "white",
       },
       th: {
         "backgronud-color": "#8ff",
@@ -309,14 +310,14 @@ class InputTable extends HTMLElement {
       },
       "tr:nth-child(2)": {
         "font-weight": "bold",
-        "background": "#eee",
+        "background-color": "#eee",
       },
       td: {
-        backgronud: "#fff",
+        "backgronud-color": "#fff",
         border: "1px solid black",
       },
       ".selected": {
-        background: "#def",
+        "background-color": "#def",
       }
     });
 
