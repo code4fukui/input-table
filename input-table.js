@@ -1,5 +1,4 @@
 import { style } from "https://js.sabae.cc/stdom.js";
-import { Day } from "https://code4fukui.github.io/day-es/Day.js";
 import { CSV } from "https://js.sabae.cc/CSV.js";
 
 const copyToClipboard = (text) => {
