@@ -1,5 +1,28 @@
 import { style } from "https://js.sabae.cc/stdom.js";
 import { CSV } from "https://js.sabae.cc/CSV.js";
+import { SJIS } from "https://js.sabae.cc/SJIS.js";
+import { readAsArrayBufferAsync } from "https://js.sabae.cc/readAsArrayBufferAsync.js";
+
+const listenDropTextFile = (comp, callback) => {
+  comp.ondrop = comp.ondragover = async (e) => {
+    e.preventDefault();
+    if (e.type !== "drop") {
+      return;
+    }
+    const ditems = e.dataTransfer.items;
+    for (let i = 0; i < ditems.length; i++) {
+      const item = ditems[i];
+      if (item.kind !== "file" || !item.type.startsWith("text/")) {
+        continue;
+      }
+      const file = item.getAsFile();
+      const bin = await readAsArrayBufferAsync(file);
+      const data = SJIS.decodeAuto(bin);
+      callback(data);
+      break; // single file only
+    }
+  };
+};
 
 const copyToClipboard = (text) => {
   const pre = document.createElement("pre");
@@ -305,10 +328,14 @@ class InputTable extends HTMLElement {
       })();
     } else {
       const data = this.textContent;
-      if (data.length > 0) {
+      if (data.length >= 0) {
         this.value = data;
       }
     }
+    listenDropTextFile(this, (data) => {
+      this.value = data;
+      this.changed();
+    });
   }
   changed() {
     if (this.onchange != null) {
@@ -324,6 +351,12 @@ class InputTable extends HTMLElement {
   }
   set value(array) {
     if (typeof array == "string") {
+      const maxlen = this.getAttribute("maxlength");
+      if (maxlen != undefined && array.length > maxlen) {
+        alert("too big data!");
+        //array = ""; // set null data
+        return;
+      }
       array = CSV.decode(array);
     }
     this.innerHTML = "";
