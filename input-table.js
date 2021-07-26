@@ -72,8 +72,14 @@ const makeTable = (ar, chgcallback) => {
     return line;
   };
   tbl.onkeydown = (e) => {
+    if (e.key == "Escape") {
+      clearSelected();
+    }
     if (e.key == "c" && (e.metaKey || e.ctrlKey)) {
       const line = tbl.getData(true);
+      if (line.length == 0) {
+        return true;
+      }
       const csv = CSV.encode(line);
       copyToClipboard(csv);
     }
@@ -300,23 +306,24 @@ class InputTable extends HTMLElement {
     this.style.display = "inline-block";
     
     style({
-      table: {
+      "input-table table": {
         "tabel-collapse": "collapse",
         "background-color": "white",
       },
-      th: {
+      "input-table th": {
         "backgronud-color": "#8ff",
         border: "1px solid black",
       },
-      "tr:nth-child(2)": {
+      "input-table tr:nth-child(2)": {
         "font-weight": "bold",
         "background-color": "#eee",
       },
-      td: {
-        "backgronud-color": "#fff",
+      "input-table td": {
+        "background-color": "#fff",
         border: "1px solid black",
+        "text-align": "left",
       },
-      ".selected": {
+      "input-table .selected": {
         "background-color": "#def",
       }
     });
