@@ -16,7 +16,7 @@ const listenDropTextFile = (comp, callback) => {
         continue;
       }
       const file = item.getAsFile();
-      const bin = await readAsArrayBufferAsync(file);
+      const bin = new Uint8Array(await readAsArrayBufferAsync(file));
       const data = SJIS.decodeAuto(bin);
       callback(data);
       break; // single file only
