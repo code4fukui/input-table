@@ -216,7 +216,7 @@ const makeTable = (ar, chgcallback) => {
   };
 
   const trh = c("tr", tbl);
-  const nrow = ar[0].length;
+  const nrow = ar.length > 0 ? ar[0].length : 0;
   const top = c("th", trh);
   top.contentEditable = true;
   top.onkeydown = (e) => {
