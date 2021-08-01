@@ -12,10 +12,13 @@ const listenDropTextFile = (comp, callback) => {
     const ditems = e.dataTransfer.items;
     for (let i = 0; i < ditems.length; i++) {
       const item = ditems[i];
-      if (item.kind !== "file" || !item.type.startsWith("text/")) {
+      if (item.kind !== "file") { // || !item.type.startsWith("text/")) { // NG on windows
         continue;
       }
       const file = item.getAsFile();
+      if (!file.name.endsWith(".csv")) {
+        continue;
+      }
       const bin = new Uint8Array(await readAsArrayBufferAsync(file));
       const data = SJIS.decodeAuto(bin);
       callback(data);
