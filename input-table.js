@@ -376,6 +376,20 @@ class InputTable extends HTMLElement {
     });
     this.appendChild(this.tbl);
   }
+  get(row, col) {
+    const s = this.tbl.childNodes[1 + row].childNodes[1 + col].textContent;
+    const res = parseFloat(s);
+    if (!isNaN(res)) {
+      return res;
+    }
+    return s;
+  }
+  set(row, col, v) {
+    if (row > this.tbl.childNodes.length - 3 || col > this.tbl.childNodes[1 + row].childNodes.length - 3) {
+      return;
+    }
+    this.tbl.childNodes[1 + row].childNodes[1 + col].textContent = v;
+  };
 }
 
 customElements.define("input-table", InputTable);

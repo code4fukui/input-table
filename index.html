@@ -35,6 +35,20 @@ def,55
 <input-table id="inputtable3" maxlength="1000"></input-table><br>
 
 <hr>
+<h2>input-table set/get</h1>
+<input-table id="inputtable4" value="1000">s,o
+abc,33
+def,55
+</input-table><br>
+<button id=btnget>get</button>
+<button id=btnset>set</button>
+<script type="module">
+btnget.onclick = () => alert("inputtable4.get(1, 1) → " + inputtable4.get(1, 1));
+btnset.onclick = () => inputtable4.set(1, 1, "12345");
+</script>
+
+
+<hr>
 <style>a { color: gray !important }</style>
 App: <a href=https://fukuno.jig.jp/3263>福野泰介の一日一創</a> (<a href=https://github.com/code4fukui/input-table>input-table tag - src on GitHub</a>)<br>
 </body>
