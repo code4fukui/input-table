@@ -75,6 +75,9 @@ const makeTable = (ar, chgcallback) => {
     return line;
   };
   tbl.onkeydown = (e) => {
+    if (e.key == "z" && (e.metaKey || e.ctrlKey)) {
+      return;
+    }
     if (e.key == "Escape") {
       clearSelected();
     }
@@ -146,6 +149,45 @@ const makeTable = (ar, chgcallback) => {
     c.onkeyup = (e) => {
       change();
     };
+    c.onpaste = (e) => {
+      if (e.clipboardData.types.includes("text/rtf")) {
+        e.preventDefault();
+        return;
+      }
+
+      // プレーンテキストを取得
+      const plainText = e.clipboardData.getData("text/plain");
+      // プレーンテキストを挿入
+      const inputBox = c;
+      const selection = window.getSelection();
+      const start = Math.min(selection.anchorOffset, selection.focusOffset);
+      const end = Math.max(selection.anchorOffset, selection.focusOffset);
+      const value = inputBox.textContent;
+      // 現在のカーソル位置にテキストを挿入
+      inputBox.textContent = value.substring(0, start) + plainText + value.substring(end);
+      // カーソル位置を調整
+      function setCaretPosition(element, position) {
+        const range = document.createRange();
+        const selection = window.getSelection();
+
+        // テキストノードを取得
+        const textNode = element.firstChild;
+
+        // 範囲の開始位置と終了位置を設定
+        range.setStart(textNode, position);
+        range.setEnd(textNode, position);
+
+        // 選択範囲を適用
+        selection.removeAllRanges();
+        selection.addRange(range);
+      }
+      //inputBox.setSelectionRange(start + plainText.length, start + plainText.length);
+      setCaretPosition(c, start + plainText.length);
+      e.preventDefault();
+    };
+    c.getPos = () => {
+      return getPos(c);
+    }
   };
   const clearSelected = () => {
     tbl.querySelectorAll(".selected").forEach(c => c.classList.remove("selected"));
@@ -300,6 +342,19 @@ const makeTable = (ar, chgcallback) => {
     tbl.insertBefore(tr, lasttr);
   };
 
+  tbl.addColumn = () => {
+    addrow.onclick();
+  };
+  tbl.addRow = () => {
+    addline.onclick();
+  };
+  tbl.getRowCount = () => {
+    return tbl.childNodes.length - 2;
+  };
+  tbl.getColumnCount = () => {
+    return tbl.childNodes[0].childNodes.length - 2;
+  };
+
   return tbl;
 };
 
@@ -347,6 +402,34 @@ class InputTable extends HTMLElement {
       this.value = data;
       this.changed();
     });
+
+    this.onpaste = (e) => {
+      if (!e.clipboardData.types.includes("text/rtf")) {
+        return;
+      }
+      //const rtf = e.clipboardData.getData("text/rtf");
+      //console.log("pastedText", pastedText, rtf)
+
+      const pastedText = e.clipboardData.getData("text");
+      const ss = pastedText.split("\n");
+      const pos = e.srcElement.getPos ? e.srcElement.getPos() : { x: 1, y: 1 };
+      for (let i = 0; i < ss.length; i++) {
+        const ss2 = ss[i].split("\t");
+        for (let j = 0; j < ss2.length; j++) {
+          const s = ss2[j];
+          const x = pos.x + j - 1;
+          const y = pos.y + i - 1;
+          if (y >= this.tbl.getRowCount()) {
+            this.tbl.addRow();
+          }
+          if (x >= this.tbl.getColumnCount()) {
+            this.tbl.addColumn();
+          }
+          this.set(y, x, s);
+        }
+      }
+      e.preventDefault();
+    };
   }
   changed() {
     if (this.onchange != null) {
