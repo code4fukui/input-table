@@ -39,6 +39,10 @@ const copyToClipboard = (text) => {
   return result;
 };
 
+const includesTableType = (types) => {
+  return types.includes("application/x-vnd.google-spreadsheet-compact-table+json") || types.includes("text/rtf");
+};
+
 const makeTable = (ar, chgcallback) => {
   const change = () => {
     if (chgcallback) {
@@ -150,7 +154,14 @@ const makeTable = (ar, chgcallback) => {
       change();
     };
     c.onpaste = (e) => {
-      if (e.clipboardData.types.includes("text/rtf")) {
+      /*
+      const types = e.clipboardData.types;
+      console.log(types);
+      for (const type of types) {
+        console.log(type, e.clipboardData.getData(type));
+      }
+      */
+      if (includesTableType(types)) {
         e.preventDefault();
         return;
       }
@@ -404,7 +415,7 @@ class InputTable extends HTMLElement {
     });
 
     this.onpaste = (e) => {
-      if (!e.clipboardData.types.includes("text/rtf")) {
+      if (!includesTableType(e.clipboardData.types)) {
         return;
       }
       //const rtf = e.clipboardData.getData("text/rtf");
