@@ -1,24 +1,28 @@
-
 # input-table
- 
-https://user-images.githubusercontent.com/1715217/124221654-25489800-db3b-11eb-8b42-c493070b1621.mp4
 
+A custom HTML element that provides an editable table interface.
+
+## Demo
 https://code4fukui.github.io/input-table/
 
-- set / get value by CSV
-- move cursor by cursor key up / down and tab / shift+tab
-- paste from spreadsheet
-- add row / line
-- delete row / line by selection
+## Features
+- Set and get table values via CSV
+- Move cursor using cursor keys and tab/shift+tab
+- Paste data from spreadsheets
+- Add and delete rows/columns
 
-## usage
-
+## Usage
 ```html
 <script type="module" src="https://code4fukui.github.io/input-table/input-table.js"></script>
-<input-table id="inputtable"></input-table><br>
-
-<textarea id="chk" style="width:70vw;height:7em;margin-top:1em">name,date,value
-abc,2021-06-19,100
-def,2021-06-20,10
-xyz,2021-07-01,5</textarea>
+<input-table id="inputtable"></input-table>
 ```
+
+## Data / API
+This project uses the following libraries:
+- `stdom.js` for styling
+- `CSV.js` for CSV parsing and encoding
+- `SJIS.js` for SJIS encoding
+- `readAsArrayBufferAsync.js` for reading files
+
+## License
+MIT License
