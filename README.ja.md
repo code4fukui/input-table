@@ -1,6 +1,6 @@
 # input-table
 
-input-tableは、表形式のデータを簡単に編集できるWebコンポーネントです。CSVの入出力、スプレッドシートからのペースト、行の追加・削除などの機能を提供します。
+input-tableは、表形式のデータを簡単に編集できるWebコンポーネントです。CSVの入出力、スプレッドシートからのペースト、行列の追加・削除などの機能を提供します。
 
 ## デモ
 https://code4fukui.github.io/input-table/
@@ -9,7 +9,7 @@ https://code4fukui.github.io/input-table/
 - CSVからの読み込み/書き出し
 - カーソルキーや Tab/Shift+Tab によるセルの移動
 - スプレッドシートからのペースト
-- 行の追加・削除
+- 行列の追加・削除
 
 ## 使い方
 ```html

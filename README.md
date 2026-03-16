@@ -27,4 +27,4 @@ This project uses the following libraries:
 - `readAsArrayBufferAsync.js` for reading files
 
 ## License
-MIT License
+MIT License — see [LICENSE](LICENSE).
