@@ -4,7 +4,7 @@
 
 ## デモ
 
-**ライブデモ:** **https://code4fukui.github.io/input-table/**
+**ライブデモ:** **https://github.com/code4fukui/input-table
 
 ## 機能
 

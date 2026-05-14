@@ -6,7 +6,7 @@ A custom HTML element (`<input-table>`) that provides an editable, spreadsheet-l
 
 ## Demo
 
-**Live Demo:** **https://code4fukui.github.io/input-table/**
+**Live Demo:** **https://github.com/code4fukui/input-table
 
 ## Features
 
